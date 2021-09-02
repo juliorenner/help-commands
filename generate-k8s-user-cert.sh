@@ -19,11 +19,12 @@ cat username.csr | base64 | tr -d "\n" > username.base64.csr
 #Submit the CertificateSigningRequest to the API Server
 #Key elements, name, request and usages (must be client auth)
 cat <<EOF | kubectl apply -f -
-apiVersion: certificates.k8s.io/v1beta1
+apiVersion: certificates.k8s.io/v1
 kind: CertificateSigningRequest
 metadata:
   name: username
 spec:
+  signerName: kubernetes.io/kube-apiserver-client
   groups:
   - system:authenticated  
   request: $(cat username.base64.csr)
