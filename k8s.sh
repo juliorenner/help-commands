@@ -106,3 +106,6 @@ kubectl config set-context demouser@kubernetes-demo  \
 #Set the context in the file this is a per kubeconfig file setting
 kubectl config use-context demouser@kubernetes-demo --kubeconfig=demouser.conf
 
+
+# Get all namespace secret values with kdecode
+kubectl get secrets -oname --no-headers | awk -F '/' '{print $2}' | xargs -I {} sh -c 'kdecode {}'
